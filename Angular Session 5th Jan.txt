@@ -1,0 +1,257 @@
+*ngIf
+==============
+<div *ngIf="isLoggedIn">
+      Welcome back. Congrats.
+</div>
+<!-- negated variable to achieve "if not" -->
+<div *ngIf="!isLoggedIn">
+  Please login, friend.
+</div>
+
+<!-- logic && operator -->
+<div *ngIf="isLoggedIn && !isNewUser">
+  Welcome back, friend.
+</div>
+
+<!-- logic OR operator -->
+<div *ngIf="isLoggedIn || isNewUser">
+  Welcome!
+</div>
+
+
+*ngIf and Else
+=========================
+
+<div *ngIf="isLoggedIn; else loggedOut">
+  Welcome back, friend.
+</div>
+
+<ng-template #loggedOut>
+  Please friend, login.
+</ng-template>
+
+
+
+Vs
+==============
+<div *ngIf="isLoggedIn">
+  Welcome back, friend.
+</div>
+
+or
+
+<ng-template [ngIf]="isLoggedIn">
+  <div>
+    Welcome back, friend.
+  </div>
+</ng-template>
+
+
+
+*ngIf else
+=====
+<ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
+  <div>
+    Welcome back, friend.
+  </div>
+</ng-template>
+
+<ng-template #loggedOut>
+  <div>
+    Please friend, login.
+  </div>
+</ng-template>
+
+
+*ngIf, Then and Else
+=======================
+
+
+<ng-container
+  *ngIf="isLoggedIn; then loggedIn; else loggedOut">
+</ng-container>
+
+<ng-template #loggedIn>
+  <div>
+    Welcome back, friend.
+  </div>
+</ng-template>
+<ng-template #loggedOut>
+  <div>
+    Please friend, login.
+  </div>
+</ng-template>
+
+
+
+*ngIf withh ngFor 
+================================
+@Component({
+  selector: 'ngif-example',
+  template: `
+<h4>NgIf</h4>
+<ul *ngFor="let person of people">
+  <li *ngIf="person.age < 30"> (1)
+  {{ person.name }} ({{ person.age }})
+  </li>
+</ul>
+`
+})
+class NgIfExampleComponent {
+
+  people: any[] = [
+    {
+      "name": "Douglas  Pace",
+      "age": 35
+    },
+    {
+      "name": "Mcleod  Mueller",
+      "age": 32
+    },
+    {
+      "name": "Day  Meyers",
+      "age": 21
+    },
+    {
+      "name": "Aguirre  Ellis",
+      "age": 34
+    },
+    {
+      "name": "Cook  Tyson",
+      "age": 32
+    }
+  ];
+}
+
+
+
+NgSwitch
+=====================
+Lets imagine we wanted to print peoples names in different colours depending on where they are from. Green for UK, Blue for USA, Red for HK.
+
+With bootstrap we can change the text color by using the text-danger, text-success, text-warning and text-primary classes.
+
+<ul *ngFor="let person of people">
+  <li *ngIf="person.country ==='UK'"
+      class="text-success">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngIf="person.country === 'USA'"
+      class="text-primary">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngIf="person.country === 'HK'"
+      class="text-danger">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngIf="person.country !== 'HK' && person.country !== 'UK' && person.country !== 'USA'"
+      class="text-warning">{{ person.name }} ({{ person.country }})
+  </li>
+</ul>
+
+
+Example:
+===============================
+@Component({
+  selector: 'ngswitch-example',
+  template: `<h4>NgSwitch</h4>
+<ul *ngFor="let person of people"
+    [ngSwitch]="person.country"> (1)
+
+  <li *ngSwitchCase="'UK'" (2)
+      class="text-success">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngSwitchCase="'USA'"
+      class="text-primary">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngSwitchCase="'HK'"
+      class="text-danger">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngSwitchDefault (3)
+      class="text-warning">{{ person.name }} ({{ person.country }})
+  </li>
+</ul>`
+})
+class NgSwitchExampleComponent {
+
+  people: any[] = [
+    {
+      "name": "Douglas  Pace",
+      "age": 35,
+      "country": 'MARS'
+    },
+    {
+      "name": "Mcleod  Mueller",
+      "age": 32,
+      "country": 'USA'
+    },
+    {
+      "name": "Day  Meyers",
+      "age": 21,
+      "country": 'HK'
+    },
+    {
+      "name": "Aguirre  Ellis",
+      "age": 34,
+      "country": 'UK'
+    },
+    {
+      "name": "Cook  Tyson",
+      "age": 32,
+      "country": 'USA'
+    }
+  ];
+}
+
+
+dynamic sytle
+============================
+<div [ngStyle]="{'color': variable ? 'red' : 'blue'}"></div>
+<div [ngStyle]="{'background-color':person.country === 'UK' ? 'green' : 'red' }"></<div>
+
+
+@Component({
+  selector: 'ngstyle-example',
+  template: `<h4>NgStyle</h4>
+<ul *ngFor="let person of people">
+  <li [ngStyle]="{'color':getColor(person.country)}"> {{ person.name }} ({{ person.country }}) (1)
+  </li>
+</ul>
+ `
+})
+class NgStyleExampleComponent {
+
+  getColor(country) { (2)
+    switch (country) {
+      case 'UK':
+        return 'green';
+      case 'USA':
+        return 'blue';
+      case 'HK':
+        return 'red';
+    }
+  }
+
+  people: any[] = [
+    {
+      "name": "Douglas  Pace",
+      "country": 'UK'
+    },
+    {
+      "name": "Mcleod  Mueller",
+      "country": 'USA'
+    },
+    {
+      "name": "Day  Meyers",
+      "country": 'HK'
+    },
+    {
+      "name": "Aguirre  Ellis",
+      "country": 'UK'
+    },
+    {
+      "name": "Cook  Tyson",
+      "country": 'USA'
+    }
+  ];
+}
+
+
+[ngStyle]="{'font-size':24}"
