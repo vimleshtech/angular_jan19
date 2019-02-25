@@ -1,0 +1,105 @@
+java script
+==============
+
+function isInt(v){
+	return (v%1==0);
+}
+========================
+
+mul(5)(3)
+
+function mul(a){
+
+	return function(b){ 
+		return a*b;
+	}
+}
+
+
+================================
+function test()
+{
+
+	var a = b = 5;
+}
+
+
+
+
+test()
+a	=	10		undefined
+b	=	5		5 
+
+=====================
+a =11
+var b =444
+let c = 33
+
+=====================
+a ==  
+a === 
+
+1 =='1'  
+1 ==='1'  
+
+====================
+
+apply()
+
+function test(x,y){
+
+	console.log(this.data[0], x)
+
+}
+
+data = [111,222,33]
+test.call(data,'ab','yb)
+
+
+
+call()
+
+function test(x,y){
+
+	console.log(this.data[0], x)
+
+}
+
+data = [111,222,33]
+test.call(data,['ab','yb])
+
+
+
+
+======
+bind()
+
+
+function test(abcd){
+}
+
+
+data = [111,222,33]
+a = test.bind(data)
+
+a()
+
+
+
+===================================
+a = [{id:111,name:'raman sinha'},{id:222,name:'rohit t..'},{}]
+
+
+ search : 
+			
+	a.filter(x => x.name.inculdes('ma') == true)
+	
+
+
+
+
+
+
+
+
+	
